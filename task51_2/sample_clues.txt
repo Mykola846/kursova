@@ -1,0 +1,9 @@
+# Sample clues for 6x6 puzzle
+# Format: row column count direction
+
+0 0 2 right
+0 5 1 down
+2 2 2 down
+3 4 2 left
+5 0 2 right
+5 5 2 up
