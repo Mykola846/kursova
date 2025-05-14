@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -116,60 +118,102 @@ public:
     }
 
     void printSolution() {
-        cout << "Solution:" << endl;
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                cout << "+";
-                if (r > 0 && solution[r][c] != solution[r-1][c])
-                    cout << "-";
-                else
-                    cout << " ";
-            }
-            cout << "+" << endl;
-            
-            for (int c = 0; c < cols; c++) {
-                if (c > 0 && solution[r][c] != solution[r][c-1])
-                    cout << "|";
-                else
-                    cout << " ";
-                
-                if (grid[r][c].value > 0)
-                    cout << grid[r][c].value;
-                else
-                    cout << " ";
-            }
-            cout << "|" << endl;
-        }
-        
+    cout << "\nSolution:\n   ";
+    for (int c = 0; c < cols; c++) {
+        cout << "  " << c + 1 << " ";
+    }
+    cout << "\n";
+
+    for (int r = 0; r < rows; r++) {
+        cout << "   ";
         for (int c = 0; c < cols; c++) {
-            cout << "+-";
+            cout << "+---";
         }
-        cout << "+" << endl;
+        cout << "+\n";
+
+        cout << " " << r + 1 << " ";
+        for (int c = 0; c < cols; c++) {
+            cout << "| ";
+            if (grid[r][c].value > 0)
+                cout << grid[r][c].value;
+            else
+                cout << " ";
+            cout << " ";
+        }
+        cout << "|\n";
+    }
+
+    cout << "   ";
+    for (int c = 0; c < cols; c++) {
+        cout << "+---";
+    }
+    cout << "+\n";
     }
 };
 
 int main() {
     int rows, cols, numCount;
-    cout << "Enter grid size (rows cols): ";
-    cin >> rows >> cols;
-    
-    ShikakuSolver solver(rows, cols);
-    
-    cout << "Enter number of values: ";
-    cin >> numCount;
-    
-    cout << "Enter positions and values (row col value, starting from 1):" << endl;
-    for (int i = 0; i < numCount; i++) {
-        int r, c, v;
-        cin >> r >> c >> v;
-        solver.addNumber(r, c, v);
-    }
-    
-    if (solver.solve()) {
-        solver.printSolution();
+    int choice;
+    cout << "Choose input method:" << endl;
+    cout << "1. Manual input" << endl;
+    cout << "2. Load from clues.txt" << endl;
+    cout << "Enter your choice (1 or 2): ";
+    cin >> choice;
+
+    if (choice == 1) {
+        // Manual input
+        cout << "Enter grid size (rows cols): ";
+        cin >> rows >> cols;
+        ShikakuSolver solver(rows, cols);
+
+        cout << "Enter number of values: ";
+        cin >> numCount;
+        cout << "Enter positions and values (row col value, starting from 1):" << endl;
+        for (int i = 0; i < numCount; i++) {
+            int r, c, v;
+            cin >> r >> c >> v;
+            solver.addNumber(r, c, v);
+        }
+
+        if (solver.solve()) {
+            solver.printSolution();
+        } else {
+            cout << "No solution found!" << endl;
+        }
+
+    } else if (choice == 2) {
+        // Load from file
+        ifstream cluesFile("clues.txt");
+        if (!cluesFile.is_open()) {
+            cerr << "Error opening clues.txt!" << endl;
+            return 1;
+        }
+
+        // читаем сначала размеры
+        cluesFile >> rows >> cols >> numCount;
+        ShikakuSolver solver(rows, cols);
+
+        for (int i = 0; i < numCount; i++) {
+            int r, c, v;
+            if (!(cluesFile >> r >> c >> v)) {
+                cerr << "Error reading data from clues.txt!" << endl;
+                return 1;
+            }
+            solver.addNumber(r, c, v);
+        }
+
+        cluesFile.close();
+
+        if (solver.solve()) {
+            solver.printSolution();
+        } else {
+            cout << "No solution found!" << endl;
+        }
+
     } else {
-        cout << "No solution found!" << endl;
+        cout << "Invalid choice!" << endl;
+        return 1;
     }
-    
+
     return 0;
 }
