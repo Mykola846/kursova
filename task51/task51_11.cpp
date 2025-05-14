@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <fstream>
+#include <iomanip>
 #include <string>
 
 using namespace std;
@@ -132,6 +133,11 @@ public:
     }
 
     void printSolution() {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD:task51/task51_11.cpp
+<<<<<<< HEAD:task51/task51_11.cpp
+>>>>>>> f84e7c3 (fixed the coordinate marking at the top)
         // Вывод сетки с обозначением границ прямоугольников
         cout << "Solution:" << endl;
         for (int r = 0; r < rows; r++) {
@@ -163,6 +169,24 @@ public:
         }
         
         // Нижняя граница
+<<<<<<< HEAD
+=======
+=======
+    cout << "\nSolution:\n   ";
+=======
+    cout << "\nSolution:\n    ";
+>>>>>>> 402a8d5 (fixed the coordinate marking at the top):task51_1/task51_11.cpp
+    for (int c = 0; c < cols; c++) {
+        cout << setw(3) << c + 1 << " ";
+    }
+    cout << "\n";
+
+
+    for (int r = 0; r < rows; r++) {
+<<<<<<< HEAD:task51/task51_11.cpp
+        cout << "   ";
+>>>>>>> b341ea4 (changed printSolution to make the output more intuitive):task51_1/task51_11.cpp
+>>>>>>> f84e7c3 (fixed the coordinate marking at the top)
         for (int c = 0; c < cols; c++) {
             cout << "+---";
         }
@@ -186,20 +210,49 @@ public:
     }
 
     cout << "   ";
+=======
+    cout << "    ";
+>>>>>>> 402a8d5 (fixed the coordinate marking at the top):task51_1/task51_11.cpp
     for (int c = 0; c < cols; c++) {
         cout << "+---";
     }
     cout << "+\n";
 
-    // Легенда
-    cout << "\nLegend:\n";
-    for (int i = 0; i < numbers.size(); i++) {
-        char ch;
-        if (i < 26) ch = 'A' + i;
-        else if (i < 52) ch = 'a' + (i - 26);
-        else ch = '0' + (i % 10);
-        cout << ch << ": value = " << numbers[i].value
-             << " at (" << numbers[i].row + 1 << "," << numbers[i].col + 1 << ")\n";
+    if (r + 1 < 10)
+        cout << "  " << r + 1 << " ";
+    else
+        cout << " " << r + 1 << " ";
+
+    for (int c = 0; c < cols; c++) {
+        cout << "| ";
+        int id = solution[r][c];
+        if (id >= 0) {
+            char ch;
+            if (id < 26) ch = 'A' + id;
+            else if (id < 52) ch = 'a' + (id - 26);
+            else ch = '0' + (id % 10);
+            cout << ch << " ";
+        } else {
+            cout << "  ";
+        }
+    }
+    cout << "|\n";
+}
+
+cout << "    ";
+for (int c = 0; c < cols; c++) {
+    cout << "+---";
+}
+cout << "+\n";
+
+cout << "\nLegend:\n";
+for (int i = 0; i < numbers.size(); i++) {
+    char ch;
+    if (i < 26) ch = 'A' + i;
+    else if (i < 52) ch = 'a' + (i - 26);
+    else ch = '0' + (i % 10);
+    cout << ch << ": value = " << numbers[i].value
+         << " at (" << numbers[i].row + 1 << "," << numbers[i].col + 1 << ")\n";
     }
 }
 
