@@ -1,5 +1,5 @@
 /*  ----------------------------------------------------------------<Header>-
-    Name:       task51.cc
+    Name:       task51_1.cpp
     Title:      Shikaku Puzzle Solver
 
     Group:      TV-41
